@@ -466,7 +466,7 @@ class ModelAndTokenizer:
                 model_name, low_cpu_mem_usage=low_cpu_mem_usage, torch_dtype=torch_dtype
             )
             nethook.set_requires_grad(False, model)
-            model.eval().cuda()
+            model.eval()
         self.tokenizer = tokenizer
         self.model = model
         self.layer_names = [
@@ -589,7 +589,7 @@ def plot_all_flow(mt, prompt, subject=None):
 
 
 # Utilities for dealing with tokens
-def make_inputs(tokenizer, prompts, device="cuda"):
+def make_inputs(tokenizer, prompts, device="cpu"):
     token_lists = [tokenizer.encode(p) for p in prompts]
     maxlen = max(len(t) for t in token_lists)
     if "[PAD]" in tokenizer.all_special_tokens:
